@@ -3,7 +3,7 @@
 module Grape
   module EndpointExtension
     def render(resources, options = {})
-      env['fast_jsonapi_options'] = options
+      env['jsonapi_serializer_options'] = options
       resources
     end
   end

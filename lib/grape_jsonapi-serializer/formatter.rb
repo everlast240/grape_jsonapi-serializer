@@ -2,7 +2,7 @@
 
 module Grape
   module Formatter
-    module FastJsonapi
+    module JsonapiSerializer
       class << self
         def call(object, env)
           return object if object.is_a?(String)
@@ -21,9 +21,9 @@ module Grape
 
         def serialize(object, env)
           if object.respond_to? :serializable_hash
-            serializable_object(object, fast_jsonapi_options(env)).serializable_hash
+            serializable_object(object, jsonapi_serializer_options(env)).serializable_hash
           elsif object.respond_to?(:to_a) && object.all? { |o| o.respond_to? :serializable_hash }
-            serializable_collection(object, fast_jsonapi_options(env))
+            serializable_collection(object, jsonapi_serializer_options(env))
           elsif object.is_a?(Hash)
             serialize_each_pair(object, env)
           else
@@ -32,20 +32,20 @@ module Grape
         end
 
         def serializable_object(object, options)
-          fast_jsonapi_serializable(object, options) || object
+          jsonapi_serializer_serializable(object, options) || object
         end
 
-        def fast_jsonapi_serializable(object, options)
+        def jsonapi_serializer_serializable(object, options)
           serializable_class(object, options)&.new(object, options)
         end
 
         def serializable_collection(collection, options)
          if heterogeneous_collection?(collection)
             collection.map do |o|
-              fast_jsonapi_serializable(o, options).serializable_hash || o.map(&:serializable_hash)
+              jsonapi_serializer_serializable(o, options).serializable_hash || o.map(&:serializable_hash)
             end
           else
-            fast_jsonapi_serializable(collection, options)&.serializable_hash || collection.map(&:serializable_hash)
+            jsonapi_serializer_serializable(collection, options)&.serializable_hash || collection.map(&:serializable_hash)
           end
         end
 
@@ -70,8 +70,8 @@ module Grape
           h
         end
 
-        def fast_jsonapi_options(env)
-          env['fast_jsonapi_options'] || {}
+        def jsonapi_serializer_options(env)
+          env['jsonapi_serializer_options'] || {}
         end
       end
     end
