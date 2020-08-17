@@ -1,5 +1,12 @@
 ## Changelog
 
+### grape_jsonapi-serializer v.0.0.1 (forked from https://github.com/EmCousin/grape_fast_jsonapi) (August 17, 2020)
+
+* Reworked to use jsonapi-serializer (https://github.com/jsonapi-serializer/jsonapi-serializer) instead of fast_jsonapi (https://github.com/Netflix/fast_jsonapi)
+  The Netflix fast_jsonapi gem is not supported since some time now. A community fork: https://github.com/fast-jsonapi/fast_jsonapi was created, but it was then
+  renamed to jsonapi-serializer (https://github.com/jsonapi-serializer/jsonapi-serializer).
+  This fork of https://github.com/EmCousin/grape_fast_jsonapi updates the gem to work with the new jsonapi-serializer fork of fast_jsonapi.
+
 ### v0.2.7 (Next)
 
 * Your contribution here.
