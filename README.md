@@ -1,16 +1,26 @@
-[![CircleCI](https://circleci.com/gh/EmCousin/grape_fast_jsonapi/tree/master.svg?style=svg)](https://circleci.com/gh/EmCousin/grape_fast_jsonapi/tree/master)
+# Grape::JsonapiSerializer
 
-# Grape::FastJsonapi
+Use [jsonapi-serializer](https://github.com/jsonapi-serializer/jsonapi-serializer), instead of [fast_jsonapi](https://github.com/Netflix/fast_jsonapi) with [Grape](https://github.com/ruby-grape/grape).
 
-Use [fast_jsonapi](https://github.com/Netflix/fast_jsonapi) with [Grape](https://github.com/ruby-grape/grape).
+## Introduction
+
+The Netflix's fast_jsonapi gem (https://github.com/Netflix/fast_jsonapi) is unsupported since some time.
+First a community fork as created here: https://github.com/fast-jsonapi/fast_jsonapi, but it was then renamed to
+[jsonapi-serializer](https://github.com/jsonapi-serializer/jsonapi-serializer)
+
+This humble gem updates [grape_fast_jsonapi](https://github.com/EmCousin/grape_fast_jsonapi) to use the new *jsonapi-serializer* fork.
+
+## TODO
+
+Some spec fixes & improvements are needed
 
 ## Installation
 
-Add the `grape` and `grape_fast_jsonapi` gems to Gemfile.
+Add the `grape` and `grape_jsonapi-serializer` gems to Gemfile.
 
 ```ruby
 gem 'grape'
-gem 'grape_fast_jsonapi'
+gem 'grape_fast_jsonapi', git: 'https://github.com/everlast240/grape_jsonapi-serializer'
 ```
 
 ## Usage
@@ -20,8 +30,8 @@ gem 'grape_fast_jsonapi'
 ```ruby
 class API < Grape::API
   content_type :jsonapi, "application/vnd.api+json"
-  formatter :json, Grape::Formatter::FastJsonapi
-  formatter :jsonapi, Grape::Formatter::FastJsonapi
+  formatter :json, Grape::Formatter::JsonapiSerializer
+  formatter :jsonapi, Grape::Formatter::JsonapiSerializer
 end
 ```
 
@@ -57,22 +67,24 @@ end
 When using Grape with Swagger via [grape-swagger](https://github.com/ruby-grape/grape-swagger), you can generate response documentation automatically via the provided following model parser:
 
 ```ruby
-# FastJsonapi serializer example
+# JsonapiSerializer example
 
-# app/serializers/base_serializer.rb
-class BaseSerializer; end
+# app/serializers/application_serializer:
+class ApplicationSerializer
+  include JSONAPI::Serializer
+
+  set_key_transform :dash
+end
+
 # app/serializers/user_serializer.rb
-class UserSerializer < BaseSerializer
-  include FastJsonapi::ObjectSerializer
-
-  set_type :user
-  has_many :orders
+class UserSerializer < ApplicationSerializer
+  belongs_to :group
 
   attributes :name, :email
 end
 
 # config/initializers/grape_swagger.rb
-GrapeSwagger.model_parsers.register(GrapeSwagger::FastJsonapi::Parser, BaseSerializer)
+GrapeSwagger.model_parsers.register(GrapeSwagger::JsonapiSerializer::Parser, ApplicationSerializer)
 
 # Your grape API endpoint
 desc 'Get current user' do
@@ -85,4 +97,4 @@ Note that you **need** the `grape-swagger` gem for this to work, otherwise it wi
 
 ## Credit
 
-Code adapted from [grape-jsonapi-resources](https://github.com/cdunn/grape-jsonapi-resources)
+Code adapted from [grape_fast_jsonapi](https://github.com/EmCousin/grape_fast_jsonapi)
