@@ -115,6 +115,7 @@ module GrapeSwagger
       end
 
       def relationships_example(relationship_data)
+        # data = { id: 1, type: relationship_data[:record_type] }
         data = { id: 1, type: Dry::Inflector.new.singularize(relationship_data[:key]).to_sym }
 
         if relationship_data[:relationship_type] == :has_many
