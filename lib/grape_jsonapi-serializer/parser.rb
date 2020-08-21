@@ -67,7 +67,7 @@ module GrapeSwagger
 
       def map_active_record_columns_to_attributes
         activerecord_model = model.record_type.to_s.camelize.safe_constantize
-        return map_model_attributes unless activerecord_model&.is_a?(ActiveRecord::Base)
+        return map_model_attributes unless activerecord_model&.kind_of?(ActiveRecord::Base)
 
         columns = activerecord_model.columns.select do |c|
           c.name.to_sym.in?(model.attributes_to_serialize.keys)
@@ -115,7 +115,8 @@ module GrapeSwagger
       end
 
       def relationships_example(relationship_data)
-        data = { id: 1, type: relationship_data[:record_type] }
+        data = { id: 1, type: Dry::Inflector.new.singularize(relationship_data[:key]).to_sym }
+
         if relationship_data[:relationship_type] == :has_many
           { data: [data] }
         else

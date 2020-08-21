@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe Grape::Formatter::FastJsonapi do
+describe Grape::Formatter::JsonapiSerializer do
   describe 'class methods' do
     let(:user) do
       User.new(id: 1, first_name: 'Chuck', last_name: 'Norris', password: 'supersecretpassword', email: 'chuck@norris.com')
@@ -17,8 +17,8 @@ describe Grape::Formatter::FastJsonapi do
 
     describe '.call' do
       subject { described_class.call(object, env) }
-      let(:fast_jsonapi_options) { nil }
-      let(:env) { { 'fast_jsonapi_options' => fast_jsonapi_options } }
+      let(:jsonapi_serializer_options) { nil }
+      let(:env) { { 'jsonapi_serializer_options' => jsonapi_serializer_options } }
 
       context 'when the object is a string' do
         let(:object) { "I am a string" }
@@ -107,7 +107,7 @@ describe Grape::Formatter::FastJsonapi do
 
         context 'when a custom serializer is passed as an option' do
           let(:object) { user }
-          let(:fast_jsonapi_options) { {
+          let(:jsonapi_serializer_options) { {
             'serializer' => '::AnotherUserSerializer'
           } }
 

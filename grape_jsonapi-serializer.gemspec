@@ -21,4 +21,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'jsonapi-serializer', '~> 2.0.0'
 
   gem.add_development_dependency 'rspec', '~> 3.9'
+  gem.add_development_dependency 'activerecord', '~> 6.0.3.2'
+  gem.add_development_dependency 'pry'
 end
