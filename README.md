@@ -25,7 +25,7 @@ gem 'grape_fast_jsonapi', git: 'https://github.com/everlast240/grape_jsonapi-ser
 
 ## Usage
 
-### Tell your API to use Grape::Formatter::FastJsonapi
+### Tell your API to use Grape::Formatter::JsonapiSerializer
 
 ```ruby
 class API < Grape::API
