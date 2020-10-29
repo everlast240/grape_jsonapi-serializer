@@ -1,5 +1,9 @@
 ## Changelog
 
+### grape_jsonapi-serializer v0.2.0 (2020-10-29)
+
+* Updated Updated dependencies: grape to 1.5.0, jsonapi-serializer to 2.1.0 etc
+
 ### grape_jsonapi-serializer v.0.0.1 (forked from https://github.com/EmCousin/grape_fast_jsonapi) (August 17, 2020)
 
 * Reworked to use jsonapi-serializer (https://github.com/jsonapi-serializer/jsonapi-serializer) instead of fast_jsonapi (https://github.com/Netflix/fast_jsonapi)
