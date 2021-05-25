@@ -17,10 +17,10 @@ Gem::Specification.new do |gem|
   gem.version       = Grape::JsonapiSerializer::VERSION
   gem.licenses      = ['MIT']
 
-  gem.add_dependency 'grape', '~> 1.5'
-  gem.add_dependency 'jsonapi-serializer', '~> 2.1.0'
+  gem.add_dependency 'grape', '> 1.5'
+  gem.add_dependency 'jsonapi-serializer', '> 2.1.0'
 
-  gem.add_development_dependency 'rspec', '~> 3.9'
-  gem.add_development_dependency 'activerecord', '~> 6.0.3.2'
+  gem.add_development_dependency 'rspec', '> 3.9'
+  gem.add_development_dependency 'activerecord', '> 6.0.3.2'
   gem.add_development_dependency 'pry'
 end
